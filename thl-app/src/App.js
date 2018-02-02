@@ -6,22 +6,21 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state={
-      users: {},
+
       message: "Hello World!"
     }
   }
   
+  // When the app starts, do this
   componentDidMount() {
-    fetch('/read')
-    .then(res => console.log(res))
-    .then(res => this.setState({ users: res }) );
+  
   }
   
 
   render() {
     return (
       <div className="App">
-        {this.state}
+        {this.state.message}
       </div>
     );
   }
