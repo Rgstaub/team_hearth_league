@@ -26,12 +26,8 @@ module.exports = function(app) {
   })
 
   app.get('/login', (req, res) => {
-    console.log("ROUTE HIT");
-    console.log(req.session.id);
-    res.send({
-      id: req.session.id,
-      cookie: req.session.cookie
-    });
+    console.log(req.session);
+    
   })
 
 } 

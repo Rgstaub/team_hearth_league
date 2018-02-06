@@ -3,12 +3,15 @@ import React from 'react';
 const LoginButton = (props) => {
   
   const sendTestLoginReq = () => {
-    fetch('/login')
+    fetch('/login', {
+      method: 'GET',
+      credentials: 'include'
+    })
     .then(response => {
       console.log(response);
       if (response.ok) {
         response.json().then(json => {
-          props.setCookie(json);
+          //props.setCookie(json);
           console.log(json);
         });
       }
