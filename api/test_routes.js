@@ -27,7 +27,7 @@ module.exports = function(app) {
 
   app.get('/login', (req, res) => {
     console.log(req.session);
-    
+    res.send(req.session);
   })
 
 } 

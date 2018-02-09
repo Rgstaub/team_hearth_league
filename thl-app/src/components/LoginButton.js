@@ -8,10 +8,8 @@ const LoginButton = (props) => {
       credentials: 'include'
     })
     .then(response => {
-      console.log(response);
       if (response.ok) {
         response.json().then(json => {
-          //props.setCookie(json);
           console.log(json);
         });
       }
@@ -23,7 +21,7 @@ const LoginButton = (props) => {
 
   return (
     <div>
-      <button onClick={sendTestLoginReq}>{props.otherProps}</button>
+      <button className="btn btn-default" onClick={sendTestLoginReq}>{props.otherProps}</button>
     </div>
   );
 }

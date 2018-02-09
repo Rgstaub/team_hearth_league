@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 
 import './App.css';
 
-import LoginButton from './components/LoginButton';
-
+//import LoginButton from './components/LoginButton';
+import NewUserForm from './components/NewUserForm';
 
 class App extends Component {
 
@@ -27,10 +27,8 @@ class App extends Component {
 
     return (
       <div className="App">
+        <NewUserForm />
 
-        <LoginButton 
-          otherProps="Hi There"
-        />
         
 
       </div>

@@ -24,10 +24,10 @@
     "create-react-app": "^1.5.1",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
+    "foundation-sites": "^6.4.4-rc1",
     "mongoose": "^5.0.3",
     "mysql2": "^1.5.1",
     "path": "^0.12.7",
-    "react-cookie": "^2.1.2",
     "sequelize": "^4.32.2",
     "universal-cookie": "^2.1.2"
   }
