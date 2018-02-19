@@ -1,0 +1,11 @@
+
+.new-user-form {
+  width: 300px;
+  text-align: left;
+  padding: 10px;
+}
+
+.error-message {
+  color: red;
+  font-size: .8rem;
+}

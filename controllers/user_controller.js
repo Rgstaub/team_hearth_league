@@ -1,25 +1,26 @@
 'use strict';
 
-var User = require('../models/userModel.js');
+//var User = require('../models/users_model.js');
+
+const db = require('../models/');
 
 class UserController {
-  // I think the constructor function below is unneeded boiler-plate -RS
-  constructor() {
-    //super()
-  }
   
-  createUser(userObject) {
+  
+  createUser(newUser) {
     return new Promise((resolve, reject) => {
-      // Calls the function defined below the class declaration
 
       console.log("CREATE NEW USER");
-      addNewUser({
-        username: userObject.email || "",
-        password: userObject.password || "",
-        fullName: userObject.fullName || "",
-        email: userObject.email || "",
-      })
+      console.log(newUser);
+      db.users.create({
+          username: newUser.username,
+          password: newUser.password,
+          battlenetId: newUser.battlenetId,
+          email: newUser.email,
+        }
+      )
         .then((user) => {
+          console.log("something happened")
           resolve(user)
         })
         .catch((err) => {

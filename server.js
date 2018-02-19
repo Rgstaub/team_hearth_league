@@ -47,6 +47,7 @@ app.use(session({
 
 // Call our routes
 require("./api/test_routes.js")(app);
+require("./api/public_routes.js")(app);
 
 
 process.on('unhandledRejection', (reason, p) => {
