@@ -29,7 +29,7 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 app.use(cors());
 
 // Static directory
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../../thl-app/build')));
 
 app.use(session({
   secret: '-v^-itsasecrettoeveryone-^v-',

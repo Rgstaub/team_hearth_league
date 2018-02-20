@@ -1,3 +1,18 @@
-node_modules  
+
+# dependencies
+node_modules
+thl-server/node_modules
+thl-app/node_modules
+
+# testing
+coverage
+
+# production
+build
+
+# misc
 .DS_Store
-thl-app/node_modules 
+.yarnclean
+npm-debug.log
+yarn-error.log
+*.rdb

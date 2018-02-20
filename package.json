@@ -1,0 +1,22 @@
+{
+  "name": "team_hearth_league",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Rgstaub/team_hearth_league.git",
+  "author": "Rgstaub <rgstaub@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "concurrently": "^3.5.1"
+  },
+  "scripts": {
+    "install": "(cd thl-app && yarn) && (cd thl-server && yarn)",
+    "build": "concurrently \"cd client && yarn build\" \"cd server && yarn build\"",
+    "start": "concurrently \"cd thl-app && yarn start\" \"cd thl-server && yarn start\"",
+    "start:prod": "cd server && yarn start:prod",
+    "heroku-postbuild": "yarn build"
+  },
+  "engines": {
+    "node": "8.8.1"
+  }
+}
