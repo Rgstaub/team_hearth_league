@@ -15,4 +15,4 @@ build
 .yarnclean
 npm-debug.log
 yarn-error.log
-*.rdb
+*.rdbgit 
