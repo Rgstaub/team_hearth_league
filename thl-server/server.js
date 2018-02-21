@@ -36,7 +36,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   name: 'id',
-  store: new MongoStore({ url: 'mongodb://localhost/thl_sessions' }),
+  store: new MongoStore({ url: 'mongodb://<dbuser>:<dbpassword>@ds143778.mlab.com:43778/heroku_mztcw63w' }),  //mongodb://localhost/thl_sessions'
   cookie: {
     path: '/',
     httpOnly: true,
