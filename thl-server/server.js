@@ -18,6 +18,11 @@ const PORT = process.env.PORT || 3001;
 // Sequelize
 const db = require("./models");
 
+// Set the correct URL for the MongoDB based on   
+const mongoUrl = process.env.JAWSDB_URL 
+  ? 'mongodb://<dbuser>:<dbpassword>@ds143778.mlab.com:43778/heroku_mztcw63w' 
+  : 'mongodb://localhost/thl_sessions';
+
 // Mongoose
 mongoose.Promise = global.Promise;
 
@@ -31,12 +36,13 @@ app.use(cors());
 // Static directory
 app.use(express.static(path.join(__dirname, '../../thl-app/build')));
 
+
 app.use(session({
   secret: '-v^-itsasecrettoeveryone-^v-',
   resave: false,
   saveUninitialized: true,
   name: 'id',
-  store: new MongoStore({ url: 'mongodb://<dbuser>:<dbpassword>@ds143778.mlab.com:43778/heroku_mztcw63w' }),  //mongodb://localhost/thl_sessions'
+  store: new MongoStore({ url: mongoUrl }),
   cookie: {
     path: '/',
     httpOnly: true,
@@ -54,13 +60,6 @@ process.on('unhandledRejection', (reason, p) => {
   console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
   // application specific logging, throwing an error, or other logic here
 });
-
-// // Leaving handlebars here just in case...
-// const exphbs = require("express-handlebars");
-// app.engine("handlebars", exphbs({ defaultLayout: "main" }));
-// app.set("view engine", "handlebars");
-
-
 
 // Sync the sequelize models and start the app
 db.sequelize.sync({})
