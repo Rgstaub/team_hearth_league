@@ -12,9 +12,9 @@
   },
   "scripts": {
     "install": "(cd thl-app && yarn) && (cd thl-server && yarn)",
-    "build": "concurrently \"cd client && yarn build\" \"cd server && yarn build\"",
+    "build": "concurrently \"cd thl-app && yarn build\" \"cd thl-server && yarn build\"",
     "start": "concurrently \"cd thl-app && yarn start\" \"cd thl-server && yarn start\"",
-    "start:prod": "cd server && yarn start:prod",
+    "start:prod": "cd thl-server && yarn start:prod",
     "heroku-postbuild": "yarn build"
   },
   "engines": {
