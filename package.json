@@ -11,7 +11,7 @@
     "heroku-cli": "^6.15.26"
   },
   "scripts": {
-    "install": "(cd thl-app && yarn) && (cd ../thl-server && yarn)",
+    "install": "(cd thl-app && yarn) && (cd thl-server && yarn)",
     "build": "concurrently \"cd client && yarn build\" \"cd server && yarn build\"",
     "start": "concurrently \"cd thl-app && yarn start\" \"cd thl-server && yarn start\"",
     "start:prod": "cd server && yarn start:prod",
