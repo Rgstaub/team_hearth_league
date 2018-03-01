@@ -5,7 +5,7 @@ module.exports = function(app) {
 
   app.post('/newUser/', (req, res) => {
     console.log("NEW USER ROUTE");
-    //UserController.createUser()
+    // UserController.createUser()
     // res.json({
     //   status: 200,
     //   message: "route hit",
@@ -19,4 +19,4 @@ module.exports = function(app) {
   })
 
 
-}
+}  
