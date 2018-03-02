@@ -1,5 +1,7 @@
 
 const UserController = require('../controllers/user_controller.js');
+const authController = require('../controllers/auth_controller.js');
+const registrationController = require('../controllers/registration_controller.js')
 
 module.exports = function(app) {
 
