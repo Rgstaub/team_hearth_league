@@ -20,7 +20,7 @@ const db = require("./models");
 
 // Set the correct URL for the MongoDB based on   
 const mongoUrl = process.env.JAWSDB_URL 
-  ? 'mongodb://<dbuser>:<dbpassword>@ds143778.mlab.com:43778/heroku_mztcw63w' 
+  ? process.env.JAWSDB_URL 
   : 'mongodb://localhost/thl_sessions';
 
 // Mongoose

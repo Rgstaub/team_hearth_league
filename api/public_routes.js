@@ -8,7 +8,7 @@ module.exports = function(app) {
     // UserController.createUser()
     // res.json({
     //   status: 200,
-    //   message: "route hit",
+    //   message: "route hit",heroku 
     //   payload: req.body
     // })
 
