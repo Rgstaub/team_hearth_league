@@ -67,4 +67,4 @@ db.sequelize.sync({})
   app.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
   });
-}).catch( err => res.json(err));
+}).catch( err => console.log(err));
