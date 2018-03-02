@@ -19,8 +19,8 @@ const PORT = process.env.PORT || 3000;
 const db = require("./models");
 
 // Set the correct URL for the MongoDB based on   
-const mongoUrl = process.env.JAWSDB_URL 
-  ? process.env.JAWSDB_URL 
+const mongoUrl = process.env.MONGODB_URI
+  ? process.env.MONGODB_URI
   : 'mongodb://localhost/thl_sessions';
 
 // Mongoose
