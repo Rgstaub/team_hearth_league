@@ -9,10 +9,12 @@ module.exports = function(app) {
   console.log("test_route has connected");
 
   app.post('/login',
-    passport.authenticate('local', { successRedirect: '/',
-                                    failureRedirect: '/login',
-                                    failureFlash: true }
-    )
+    passport.authenticate('local'),
+    function(req, res) {
+      // If this function gets called, authentication was successful.
+      // `req.user` contains the authenticated user.
+      res.send(req.user.toJSON());
+    }
   );
 
 } 

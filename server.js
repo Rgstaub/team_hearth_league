@@ -9,7 +9,9 @@ const bodyParser = require("body-parser");
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const path = require('path');
-const cors = require('cors')
+const cors = require('cors');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
 // Create the app and set the port
 const app = express();
@@ -37,27 +39,27 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, '../../thl-app/build')));
 
 
-// app.use(session({
-//   secret: '-v^-itsasecrettoeveryone-^v-',
-//   resave: false,
-//   saveUninitialized: true,
-//   name: 'id',
-//   store: new MongoStore({ url: mongoUrl }),
-//   cookie: {
-//     path: '/',
-//     httpOnly: true,
-//     secure: false,
-//     maxAge:  259200000  // Three days
-//   }
-// }));
+app.use(session({
+  secret: '-v^-itsasecrettoeveryone-^v-',
+  resave: false,
+  saveUninitialized: true,
+  name: 'id',
+  store: new MongoStore({ url: mongoUrl }),
+  cookie: {
+    path: '/',
+    httpOnly: true,
+    secure: false,
+    maxAge:  259200000  // Three days
+  }
+}));
 
+app.use(passport.initialize());
+app.use(passport.session());
 
-var passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy;
 
 passport.use(new LocalStrategy(
-  function(username, password, done) {
-    User.findOne({ username: username }, function (err, user) {
+  function(email, password, done) {
+    db.users.findOne({ email: email }, function (err, user) {
       if (err) { return done(err); }
       if (!user) {
         return done(null, false, { message: 'Incorrect username.' });
