@@ -6,32 +6,35 @@ const db = require('../models/');
 
 class UserController {
   
-  
-  createUser(newUser) {
+
+  findUserById(userId) {
     return new Promise((resolve, reject) => {
-
-      console.log("CREATE NEW USER");
-      console.log(newUser);
-      db.users.create({
-          username: newUser.username,
-          password: newUser.password,
-          battlenetId: newUser.battlenetId,
-          email: newUser.email,
-        }
-      )
-        .then((user) => {
-          console.log("something happened")
-          resolve(user)
-        })
-        .catch((err) => {
-          console.log(err);
-          console.log("Create User Error - send to handler")
-          // Send the error to the handler for processing
-          reject(handleErrors(err))
-        })
-
+      db.users.findById(userId)
+      .then( user => resolve(user) )
+      .catch( err => reject(err) )
     })
   }
+  
+  findUserByEmail(email) {
+    return new Promise((resolve, reject) => {
+      db.users.findOne({
+        where: {
+          email: email
+        }
+      })
+      .then( user => resolve(user) )
+      .catch( err => reject(err) )
+    })
+  }
+
+
+
+
+
+
+
+
+
 
   findUserByUsernamePassword(username, password) {
     return new Promise((resolve, reject) => {

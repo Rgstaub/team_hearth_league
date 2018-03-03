@@ -13,12 +13,12 @@ const cors = require('cors')
 
 // Create the app and set the port
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // Sequelize
 const db = require("./models");
 
-// Set the correct URL for the MongoDB based on   
+// Set the correct URL for the MongoDB based on the envirnomnent  
 const mongoUrl = process.env.MONGODB_URI
   ? process.env.MONGODB_URI
   : 'mongodb://localhost/thl_sessions';
