@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Rgstaub/team_hearth_league#readme",
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "connect-mongo": "^2.0.1",
     "cors": "^2.8.4",
@@ -30,6 +31,7 @@
     "mongoose": "^5.0.3",
     "mysql2": "^1.5.1",
     "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "sequelize": "^4.32.2",
     "universal-cookie": "^2.1.2"

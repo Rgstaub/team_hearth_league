@@ -37,19 +37,38 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, '../../thl-app/build')));
 
 
-app.use(session({
-  secret: '-v^-itsasecrettoeveryone-^v-',
-  resave: false,
-  saveUninitialized: true,
-  name: 'id',
-  store: new MongoStore({ url: mongoUrl }),
-  cookie: {
-    path: '/',
-    httpOnly: true,
-    secure: false,
-    maxAge:  259200000  // Three days
+// app.use(session({
+//   secret: '-v^-itsasecrettoeveryone-^v-',
+//   resave: false,
+//   saveUninitialized: true,
+//   name: 'id',
+//   store: new MongoStore({ url: mongoUrl }),
+//   cookie: {
+//     path: '/',
+//     httpOnly: true,
+//     secure: false,
+//     maxAge:  259200000  // Three days
+//   }
+// }));
+
+
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
   }
-}));
+));
 
 // Call our routes
 require("./api/test_routes.js")(app);
