@@ -9,13 +9,14 @@ const AuthController = {
 
   createUser(newUser) {
     return new Promise((resolve, reject) => {
+      //hash the password before
       bcrypt.hash(newUser.password, SALT_WORK_FACTOR)
       .then( hash => {
         db.users.create({
           username: newUser.username,
           password: hash,
           battlenetId: newUser.battlenetId,
-          email: newUser.email,
+          email: newUser.email
         })
         .then((user) => {
           resolve(user)
@@ -27,16 +28,7 @@ const AuthController = {
     })
   },
 
-  checkPassword(userId, password) {
-    return new Promise((resolve, reject) => {
-      UserController.findUserById(userId)
-      .then( user => {
-        bcrypt.compare(password, user.password)
-        .then ( res => resolve(res) )
-        .catch( err => reject(err) )
-      })
-    })
-  }
+
 
 }
 

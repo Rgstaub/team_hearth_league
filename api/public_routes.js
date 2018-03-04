@@ -5,10 +5,19 @@ const RegistrationController = require('../controllers/registration_controller.j
 
 module.exports = function(app) {
 
-  app.post('/public/newUser/', (req, res) => {
+  app.post('/public/register/', (req, res) => {
     AuthController.createUser(req.body)
-    .then( newUser => res.send(newUser.toJSON()) )
-    .catch( err => res.json(err))
+    .then( newUser => res.json(newUser) )
+    .catch( err => res.json(err) )
+  })
+
+  app.post('/logout', (req, res) => {
+    let username = req.user.username;
+    req.logout();
+    res.json({
+      status: 200,
+      message: `User ${username} has been logged out`,
+    })
   })
 
 }  

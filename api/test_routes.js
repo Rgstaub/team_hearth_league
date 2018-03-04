@@ -11,8 +11,7 @@ module.exports = function(app, passport) {
   app.post('/login', 
     
     passport.authenticate('local'),
-    function(req, res) {
-      console.log("################################################");
+    (req, res) => {
       res.json(req.user);
     }
   )
@@ -20,7 +19,11 @@ module.exports = function(app, passport) {
   app.get('/test', (req, res) => {
     
     req.user
-      ? res.json({status: 200, message: "Succesfull authentication"})
+      ? res.json({ status: 200, message: req.user.username })
       : res.json({ status:401, message: "unauthorized"})
+  })
+
+  app.get('/logout', (req, res) => {
+
   })
 } 

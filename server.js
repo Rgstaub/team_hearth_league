@@ -10,8 +10,9 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const path = require('path');
 const cors = require('cors');
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
+const passport = require('./controllers/Auth');
+const flash = require('connect-flash');
+
 
 // Create the app and set the port
 const app = express();
@@ -55,40 +56,9 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
-passport.serializeUser(function(user, done) {
-  console.log(user);
-  done(null, user.id);
-});
 
-passport.deserializeUser(function(id, done) {
-  db.users.findById(id)
-  .then( user => {
-    done(null, user);
-  })
-
-});
-
-passport.use(new LocalStrategy({
-    usernameField: 'email'
-  }, 
-  function(email, password, done) {
-    //console.log("$$$$$$$$$$$$$$$$$$$$$$$$$")
-    db.users.findOne({ where: { email: email }})
-    .then( user => {
-      console.log(user.password);
-      //console.log(err);
-      //if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (user.password !== password) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
-    });
-  }
-));
 
 // Call our routes
 require("./api/test_routes.js")(app, passport);
