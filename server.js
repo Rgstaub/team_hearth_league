@@ -56,15 +56,33 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+passport.serializeUser(function(user, done) {
+  console.log(user);
+  done(null, user.id);
+});
 
-passport.use(new LocalStrategy(
+passport.deserializeUser(function(id, done) {
+  db.users.findById(id)
+  .then( user => {
+    done(null, user);
+  })
+
+});
+
+passport.use(new LocalStrategy({
+    usernameField: 'email'
+  }, 
   function(email, password, done) {
-    db.users.findOne({ email: email }, function (err, user) {
-      if (err) { return done(err); }
+    //console.log("$$$$$$$$$$$$$$$$$$$$$$$$$")
+    db.users.findOne({ where: { email: email }})
+    .then( user => {
+      console.log(user.password);
+      //console.log(err);
+      //if (err) { return done(err); }
       if (!user) {
         return done(null, false, { message: 'Incorrect username.' });
       }
-      if (!user.validPassword(password)) {
+      if (user.password !== password) {
         return done(null, false, { message: 'Incorrect password.' });
       }
       return done(null, user);
@@ -73,8 +91,8 @@ passport.use(new LocalStrategy(
 ));
 
 // Call our routes
-require("./api/test_routes.js")(app);
-require("./api/public_routes.js")(app);
+require("./api/test_routes.js")(app, passport);
+require("./api/public_routes.js")(app, passport);
 
 
 process.on('unhandledRejection', (reason, p) => {
