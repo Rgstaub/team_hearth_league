@@ -13,7 +13,6 @@ passport.deserializeUser( (id, done) => {
   .then( user => {
     done(null, user);
   })
-
 });
 
 passport.use(new LocalStrategy({
