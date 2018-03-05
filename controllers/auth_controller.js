@@ -38,7 +38,29 @@ const AuthController = {
     })
   },
 
+  validateNewUser(newUser) {
+    return new Promise ((resolve, reject) => {
 
+      Promise.all([
+        findUserByBnetId(newUser.bnetId),
+        findUserByEmail(newUser.email),
+        findUserByUsername(newUser.username)
+      ])
+      .then( results => {
+        if (results[0]) {
+          results[0] = "That Battle.net ID is already in use";
+        }
+        if (results[1]) {
+          results[1] = "That email address is already in use";
+        }
+        if (results[2]) {
+          results[2] = "That username is already in use";
+        }
+        resolve( results.filter( result => result !== null ) )
+      })
+      .catch( err => reject(err) )
+    })
+  }
 
 
 }
@@ -60,7 +82,7 @@ function findUserByEmail(email) {
   })
 }
 
-function findUserByUsername() {
+function findUserByUsername(username) {
   return new Promise((resolve, reject) => {
     db.users.find({
       where: {
@@ -76,10 +98,44 @@ function findUserByUsername() {
   })
 }
 
-function findUserByBnetId() {
+function findUserByBnetId(bnetId) {
   return new Promise((resolve, reject) => {
-
+    db.users.find({
+      where: {
+        bnetId: bnetId
+      }
+    })
+    .then( user => {
+      resolve(user)
+    })
+    .catch( err => {
+      reject(err);
+    })
   })
+}
+
+function validateEmail(email) {
+  // parse the email
+  if (!validEmail) {
+    return ({
+      err: "invalid email",
+      message: "The provided email address is invalid"
+    })
+  } else {
+    return null
+  }
+}
+
+function validateUsername(username) {
+
+}
+
+function validatePassword(password) {
+
+}
+
+function validateBnetId(bnetId) {
+
 }
 
 

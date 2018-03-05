@@ -6,8 +6,17 @@ const RegistrationController = require('../controllers/registration_controller.j
 module.exports = function(app) {
 
   app.post('/public/register/', (req, res) => {
-    AuthController.createUser(req.body)
-    .then( newUser => res.json(newUser) )
+    AuthController.validateNewUser(req.body)
+    .then( issues => {
+      if ( issues.length < 1 ) {
+        AuthController.createUser(req.body)
+        .then( newUser => res.json(newUser) )
+      } else {
+        res.send({
+          err: [issues]
+        })
+      }
+    })
     .catch( err => res.json(err) )
   })
 

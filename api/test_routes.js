@@ -1,6 +1,7 @@
 'use strict'
 
 const db = require("../models");
+const AuthController = require('../controllers/auth_controller')
 //const passport = require('passport');
 
 //========================| Test Routes |=========================
@@ -26,4 +27,10 @@ module.exports = function(app, passport) {
   app.get('/logout', (req, res) => {
 
   })
+
+  app.post('/validate', (req, res) => {
+    AuthController.validateNewUser(req.body)
+    .then( response => res.json(response))
+  })
+
 } 
