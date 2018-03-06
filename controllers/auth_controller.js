@@ -9,16 +9,6 @@ const AuthController = {
 
   createUser(newUser) {
     return new Promise((resolve, reject) => {
-
-      // check that email, username, or bnetId are not in use already
-      db.users.findAll({
-        where: {
-          username: newUser.username,
-          bnetId: newUser.bnetId,
-          email: newUser.email
-        }
-      })
-
       //hash the password before saving a new user
       bcrypt.hash(newUser.password, SALT_WORK_FACTOR)
       .then( hash => {
@@ -60,9 +50,36 @@ const AuthController = {
       })
       .catch( err => reject(err) )
     })
+  },
+
+
+  makePasswordResetLink(email) {
+    return new Promise((resolve, reject) => {
+
+      findUserByEmail(email).then( user => {
+        // With the user found, create a token and update it to the user
+        // user.createToken(function(token) {
+
+      
+        findUserAndUpdateToken(user.id, token).then( () => {
+          const url = `${req.protocol}://${req.get('host')}/pwreset/?id=${user.id}&amp;token=${token}`
+          resolve(url)
+        })
+          
+        //   , (user) => {
+
+        //       var date = new Date().getTime()
+        //       setTokenExpiration(user.id, date);
+
+        //       const resetLink = buildLink(user.id, token, baseUrl);
+        //       resolve(resetLink);
+        //     })
+        //   })
+        // })
+        
+      }).catch(err => reject(err))
+    })
   }
-
-
 }
 
 
@@ -115,15 +132,7 @@ function findUserByBnetId(bnetId) {
 }
 
 function validateEmail(email) {
-  // parse the email
-  if (!validEmail) {
-    return ({
-      err: "invalid email",
-      message: "The provided email address is invalid"
-    })
-  } else {
-    return null
-  }
+
 }
 
 function validateUsername(username) {

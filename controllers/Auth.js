@@ -21,12 +21,10 @@ passport.use(new LocalStrategy({
   function(email, password, done) {
     db.users.findOne({ where: { email: email }})
     .then( user => {
-
       if (!user) {
         return done(null, false, { message: 'Incorrect username.' });
       }
-      if (!validPassword(user, password)) {
-        console.log("INVALID PASSWORD");
+      if (validPassword(user, password) === true) {
         return done(null, false, { message: 'Incorrect password.' });
       }
       return done(null, user);

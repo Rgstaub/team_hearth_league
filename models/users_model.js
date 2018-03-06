@@ -29,6 +29,15 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true
+    },
+    pwResetToken: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      unique: true
+    },
+    pwTokenExpiration: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   })
 

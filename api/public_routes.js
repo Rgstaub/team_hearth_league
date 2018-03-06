@@ -3,14 +3,17 @@ const UserController = require('../controllers/user_controller.js');
 const AuthController = require('../controllers/auth_controller.js');
 const RegistrationController = require('../controllers/registration_controller.js')
 
-module.exports = function(app) {
+module.exports = function(app, passport) {
 
   app.post('/public/register/', (req, res) => {
     AuthController.validateNewUser(req.body)
     .then( issues => {
       if ( issues.length < 1 ) {
         AuthController.createUser(req.body)
-        .then( newUser => res.json(newUser) )
+        .then( newUser => { 
+
+          res.json(newUser)
+         })
       } else {
         res.send({
           err: [issues]
@@ -21,12 +24,32 @@ module.exports = function(app) {
   })
 
   app.post('/logout', (req, res) => {
-    let username = req.user.username;
+    
+    // let username = req.user.username;
     req.logout();
     res.json({
       status: 200,
-      message: `User ${username} has been logged out`,
+      message: `User has been logged out`,
     })
+  })
+
+  app.post('/login', 
+    passport.authenticate('local'),
+    (req, res) => {
+      res.json(req.user);
+    }
+  )
+
+  app.post('/reset-password', (req, res) => {
+    AuthController.makePasswordResetLink(req.email)
+    .then( response => {
+
+    })
+  })
+
+  app.get('/pwreset/', (req, res) => {
+    AuthController.validateToken(req.query.token, req.query.id)
+    .then( result => res.json(result) )
   })
 
 }  

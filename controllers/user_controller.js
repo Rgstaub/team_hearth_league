@@ -79,10 +79,12 @@ class UserController {
     })
   }
 
-  makePasswordResetLink(userName, baseUrl) {
+  makePasswordResetLink(email) {
     return new Promise((resolve, reject) => {
 
-      findOneByUsername(userName)
+      var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+      console.log(fullUrl);
+      db.users.findOne()
         .then(user => {
           // With the user found, create a token and update it to the user
           user.createToken(function(token) {
