@@ -1,9 +1,18 @@
 
+
 const db = require('../models/');
 const bcrypt = require('bcrypt');
 const SALT_WORK_FACTOR = 10;
 const uuid = require('uuid/v4');
 const UserController = require('./user_controller.js');
+const UserCon = require('./user_controller_2');
+
+let host;
+if (process.env.HOST) {
+  host = "api.teamhearthleague.com";
+} else {
+  host = "localhost:3001";
+}
 
 const AuthController = {
 
@@ -53,39 +62,51 @@ const AuthController = {
   },
 
 
-  makePasswordResetLink(email) {
-    return new Promise((resolve, reject) => {
+  makePasswordResetLink( email ) {
+    return new Promise( ( resolve, reject ) => {
 
       findUserByEmail(email).then( user => {
         // With the user found, create a token and update it to the user
-        // user.createToken(function(token) {
-
-      
-        findUserAndUpdateToken(user.id, token).then( () => {
-          const url = `${req.protocol}://${req.get('host')}/pwreset/?id=${user.id}&amp;token=${token}`
-          resolve(url)
+        const token = uuid();
+        console.log(user)
+        UserCon.updateUserResetToken( user.id, token ).then( ( response ) => {
+          response[0] === 1 ?
+            resolve(`http://${host}/pwreset/?id=${user.id}&token=${token}`)
+            : resolve({ status: 404, message: 'user not found'})
         })
-          
-        //   , (user) => {
+      })
+      .catch(err => reject(err))
+    })
+  },
 
-        //       var date = new Date().getTime()
-        //       setTokenExpiration(user.id, date);
-
-        //       const resetLink = buildLink(user.id, token, baseUrl);
-        //       resolve(resetLink);
-        //     })
-        //   })
-        // })
-        
-      }).catch(err => reject(err))
+  validateToken( token, userId ) {
+    return new Promise( ( resolve, reject ) => {
+      db.users.findById(userId)
+      .then( user => {
+        if ( user.pwResetToken === token) {
+          if ( parseInt(user.pwTokenExpiration) > Date.now() ) {
+            resolve({
+              valid: true,
+              message: "Valid token"
+            });
+          } else resolve({
+            valid: false,
+            message: "Token is expired"
+          });
+        } else resolve({
+          valid: false,
+          message: "Invalid token"
+        })
+      })
+      .catch( err => reject( err ))
     })
   }
+
 }
 
-
 function findUserByEmail(email) {
-  return new Promise((resolve, reject) => {
-    db.users.find({
+  return new Promise( (resolve, reject) => {
+    db.users.find( {
       where: {
         email: email
       }
@@ -99,9 +120,9 @@ function findUserByEmail(email) {
   })
 }
 
-function findUserByUsername(username) {
-  return new Promise((resolve, reject) => {
-    db.users.find({
+function findUserByUsername( username ) {
+  return new Promise( (resolve, reject) => {
+    db.users.find( {
       where: {
         username: username
       }
@@ -115,9 +136,9 @@ function findUserByUsername(username) {
   })
 }
 
-function findUserByBnetId(bnetId) {
-  return new Promise((resolve, reject) => {
-    db.users.find({
+function findUserByBnetId( bnetId ) {
+  return new Promise( (resolve, reject) => {
+    db.users.find( {
       where: {
         bnetId: bnetId
       }
@@ -131,19 +152,20 @@ function findUserByBnetId(bnetId) {
   })
 }
 
-function validateEmail(email) {
+
+function validateEmail( email ) {
 
 }
 
-function validateUsername(username) {
+function validateUsername( username ) {
 
 }
 
-function validatePassword(password) {
+function validatePassword( password ) {
 
 }
 
-function validateBnetId(bnetId) {
+function validateBnetId( bnetId ) {
 
 }
 

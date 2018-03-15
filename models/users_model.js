@@ -1,4 +1,4 @@
-'use strict'
+
 
 const bycrypt = require('bcrypt');
 const SALT_WORK_FACTOR = 10;
@@ -36,7 +36,7 @@ module.exports = function(sequelize, DataTypes) {
       unique: true
     },
     pwTokenExpiration: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: true
     }
   })
@@ -45,6 +45,8 @@ module.exports = function(sequelize, DataTypes) {
   User.prototype.toJSON =  function () {
     var values = Object.assign({}, this.get());
     delete values.password;
+    delete values.pwResetToken;
+    delete values.pwTokenExpiration;
     return values;
   }
 

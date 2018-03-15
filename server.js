@@ -18,6 +18,8 @@ const flash = require('connect-flash');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+console.log(process.env);
+
 // Sequelize
 const db = require("./models");
 
