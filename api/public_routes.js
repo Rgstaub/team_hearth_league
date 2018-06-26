@@ -33,7 +33,7 @@ module.exports = function(app, passport) {
   app.post('/login', 
     passport.authenticate('local'),
     (req, res) => {
-      res.json(req.user);
+      res.send(req.user);
     }
   )
 

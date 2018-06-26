@@ -18,8 +18,6 @@ const flash = require('connect-flash');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-console.log(process.env);
-
 // Sequelize
 const db = require("./models");
 
@@ -58,7 +56,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
+app.use(flash());  
 
 
 

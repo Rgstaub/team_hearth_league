@@ -21,24 +21,34 @@ passport.use(new LocalStrategy({
   function(email, password, done) {
     db.users.findOne({ where: { email: email }})
     .then( user => {
+
       if (!user) {
+        console.log("INCORRECT USERNAME")
         return done(null, false, { message: 'Incorrect username.' });
       }
-      if (validPassword(user, password) === true) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
+      const validPassword = validatePassword(user, password)
+      .then( valid => {
+        if (!valid) {
+          console.log("INCORRECT PASSWORD")
+          return done(null, false, { message: 'Incorrect password.' });
+        }
+        console.log("CORRECT")
+        console.log(user);
+        return done(null, user);
+      })
     })
+      
     .catch( err => {
       return done(err);
     } );
   }  
 ));
 
-function validPassword(user, password) {
+function validatePassword(user, password) {
   return new Promise((resolve, reject) => {
     bcrypt.compare(password, user.password)
     .then( res => {
+      console.log("Correct password: " + res)
       resolve(res);
     })
     .catch( err => reject(err) );
