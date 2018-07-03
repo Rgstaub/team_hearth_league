@@ -27,28 +27,19 @@ class UserController {
     })
   }
 
+  // findUserByUsernamePassword(username, password) {
+  //   return new Promise((resolve, reject) => {
 
+  //     validateUserByUsernamePassword(username, password)
+  //       .then(user => {
+  //         resolve(user)
+  //       })
+  //       .catch(err => {
+  //         reject(err)
+  //       })
 
-
-
-
-
-
-
-
-  findUserByUsernamePassword(username, password) {
-    return new Promise((resolve, reject) => {
-
-      validateUserByUsernamePassword(username, password)
-        .then(user => {
-          resolve(user)
-        })
-        .catch(err => {
-          reject(err)
-        })
-
-    })
-  }
+  //   })
+  // }
 
   findOneAndUpdate(id, properties) {
     return new Promise((resolve, reject) => {

@@ -1,5 +1,5 @@
 
-const UserController = require('../controllers/user_controller.js');
+//const UserController = require('../controllers/user_controller.js');
 const AuthController = require('../controllers/auth_controller.js');
 
 module.exports = function(app, passport) {
@@ -10,6 +10,7 @@ module.exports = function(app, passport) {
       if ( issues.length < 1 ) {
         AuthController.createUser(req.body)
         .then( newUser => { 
+          console.log(newUser);
           res.json(newUser)
          })
       } else {
@@ -21,6 +22,21 @@ module.exports = function(app, passport) {
     .catch( err => res.json(err) )
   })
 
+  app.get('/api/auth/welcome', (req, res) => {
+    req.user ?
+      //console.log(res.user.username)
+      res.send({ 
+        status: 200,
+        username: req.user.username,
+        email: req.user.email,
+        id: req.user.id,
+        
+      })
+      : res.send({ 
+        status: 401,
+        message: 'You need to log in' })
+  })
+
   app.post('/logout', (req, res) => {
     // let username = req.user.username;
     req.logout();
@@ -30,6 +46,8 @@ module.exports = function(app, passport) {
     })
   })
 
+  // TODO: Get specific message about why login failed from the local strategy,
+  // using a callback in passport.authenticate
   app.post('/login', 
     passport.authenticate('local'),
     (req, res) => {
