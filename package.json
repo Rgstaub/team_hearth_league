@@ -25,7 +25,6 @@
     "connect-flash": "^0.1.1",
     "connect-mongo": "^2.0.1",
     "cors": "^2.8.4",
-    "create-react-app": "^1.5.1",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "foundation-sites": "^6.4.4-rc1",
@@ -34,7 +33,6 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
-    "sequelize": "^4.32.2",
-    "universal-cookie": "^2.1.2"
+    "sequelize": "^4.32.2"
   }
 }
