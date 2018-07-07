@@ -40,7 +40,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, '../../thl-app/build')));
 
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "http://alpha.teamhearthleague.com");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
