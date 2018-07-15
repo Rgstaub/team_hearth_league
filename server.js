@@ -22,9 +22,21 @@ const PORT = process.env.PORT || 3001;
 const db = require("./models");
 
 // Set the correct URL for the MongoDB based on the envirnomnent  
-const mongoUrl = process.env.MONGODB_URI
-  ? process.env.MONGODB_URI
-  : 'mongodb://localhost/thl_sessions';
+// const mongoUrl = process.env.MONGODB_URI
+//   ? process.env.MONGODB_URI
+//   : 'mongodb://localhost/thl_sessions';
+
+var mongoUrl, clientHost;
+
+if (process.ENV) {
+  console.log("----Production Environment----")
+  mongoUrl = process.env.MONGODB_URI;
+  clientHost = 'https://thl-front-end.herokuapp.com'
+} else {
+  console.log("----Development Environmnt----")
+  mongoUrl ='mongodb://localhost/thl_sessions';
+  clientHost = 'http://localhost:3000'
+}
 
 // Mongoose
 mongoose.Promise = global.Promise;
@@ -34,16 +46,36 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
-app.use(cors());
 
-// Static directory
-app.use(express.static(path.join(__dirname, '../../thl-app/build')));
 
 app.options('/api/auth/welcome', cors({
-  origin: 'https://thl-front-end.herokuapp.com',
+  origin: clientHost,
   credentials: true
 }));
 
+app.use( (req, res, next) => {
+  res.set('Acess-Control-Allow-Origin', clientHost)
+  res.set('Acess-Control-Allow-Method', 'GET')
+  res.set('Acess-Control-Allow-Credentials', true)
+  next( );
+})
+
+
+app.get('/api/auth/welcome', (req, res) => {
+  console.log(req.headers)
+  req.user ?
+    //console.log(res.user.username)
+    res.send({ 
+      status: 200,
+      username: req.user.username,
+      email: req.user.email,
+      id: req.user.id,
+      
+    })
+    : res.send({ 
+      status: 401,
+      message: 'You need to log in' })
+})
 
 app.use(session({
   secret: '-v^-itsasecrettoeveryone-^v-',
@@ -66,8 +98,8 @@ app.use(flash());
 
 
 // Call our routes
-require("./api/test_routes.js")(app, passport);
-require("./api/public_routes.js")(app, passport);
+// require("./api/test_routes.js")(app, passport);
+// require("./api/public_routes.js")(app, passport);
 
 
 process.on('unhandledRejection', (reason, p) => {

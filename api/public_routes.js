@@ -1,8 +1,14 @@
 
 //const UserController = require('../controllers/user_controller.js');
 const AuthController = require('../controllers/auth_controller.js');
+const cors = require('cors');
 
 module.exports = function(app, passport) {
+
+  app.options('/api/auth/welcome', cors({
+    origin: 'http://localhost:3000/',
+    credentials: true
+  }));
 
   app.post('/public/register/', (req, res) => {
     AuthController.validateNewUser(req.body)
