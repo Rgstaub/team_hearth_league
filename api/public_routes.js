@@ -23,6 +23,7 @@ module.exports = function(app, passport) {
   })
 
   app.get('/api/auth/welcome', (req, res) => {
+    console.log(req.headers)
     req.user ?
       //console.log(res.user.username)
       res.send({ 

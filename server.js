@@ -39,12 +39,10 @@ app.use(cors());
 // Static directory
 app.use(express.static(path.join(__dirname, '../../thl-app/build')));
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "https://thl-front-end.herokuapp.com/");
-  res.header("Access-Control-Allow-Headers", "X-Custom-Header");
-  res.header("Access-Control-Allow-Methods", "GET, POST");
-  next();
-});
+app.options('/api/auth/welcome', cors({
+  origin: 'https://thl-front-end.herokuapp.com',
+  credentials: true
+}));
 
 
 app.use(session({
