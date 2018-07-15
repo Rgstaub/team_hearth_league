@@ -28,7 +28,9 @@ const db = require("./models");
 
 var mongoUrl, clientHost;
 
-if (process.ENV) {
+console.log(process.ENV);
+
+if (process.ENV.MONGODB_URI) {
   console.log("----Production Environment----")
   mongoUrl = process.env.MONGODB_URI;
   clientHost = 'https://thl-front-end.herokuapp.com'
