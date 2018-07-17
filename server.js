@@ -70,7 +70,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   name: 'id',
-  store: new MongoStore({ url: mongoUrl }),
+  store: new MongoStore({ url: process.env.MONGODB_URI }),
   cookie: {
     path: '/',
     httpOnly: true,
