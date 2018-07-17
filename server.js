@@ -65,19 +65,19 @@ app.use((req, res, next) => {
 
 
 
-app.use(session({
-  secret: '-v^-itsasecrettoeveryone-^v-',
-  resave: false,
-  saveUninitialized: true,
-  name: 'id',
-  store: new MongoStore({ url: process.env.MONGODB_URI }),
-  cookie: {
-    path: '/',
-    httpOnly: true,
-    secure: false,
-    maxAge:  259200000  // Three days
-  }
-}));
+// app.use(session({
+//   secret: '-v^-itsasecrettoeveryone-^v-',
+//   resave: false,
+//   saveUninitialized: true,
+//   name: 'id',
+//   store: new MongoStore({ url: process.env.MONGODB_URI }),
+//   cookie: {
+//     path: '/',
+//     httpOnly: true,
+//     secure: false,
+//     maxAge:  259200000  // Three days
+//   }
+// }));
 
 app.use(passport.initialize());
 app.use(passport.session());
