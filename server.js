@@ -55,29 +55,15 @@ app.options('/api/auth/welcome', cors({
   credentials: true
 }));
 
-app.use( (req, res, next) => {
-  res.set('Acess-Control-Allow-Origin', clientHost)
-  res.set('Acess-Control-Allow-Method', 'GET')
-  res.set('Acess-Control-Allow-Credentials', true)
-  next( );
+app.use((req, res, next) => {
+  cors({
+    origin: clientHost,
+    credentials: true
+  });
+  next();
 })
 
 
-app.get('/api/auth/welcome', (req, res) => {
-  console.log(req.headers)
-  req.user ?
-    //console.log(res.user.username)
-    res.send({ 
-      status: 200,
-      username: req.user.username,
-      email: req.user.email,
-      id: req.user.id,
-      
-    })
-    : res.send({ 
-      status: 401,
-      message: 'You need to log in' })
-})
 
 app.use(session({
   secret: '-v^-itsasecrettoeveryone-^v-',
@@ -100,12 +86,12 @@ app.use(flash());
 
 
 // Call our routes
-// require("./api/test_routes.js")(app, passport);
-// require("./api/public_routes.js")(app, passport);
+require("./api/test_routes.js")(app, passport);
+require("./api/public_routes.js")(app, passport);
 
 
 process.on('unhandledRejection', (reason, p) => {
-  console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
+  console.log('(-O-) Unhandled Rejection at: Promise', p, 'reason:', reason);
   // application specific logging, throwing an error, or other logic here
 });
 
@@ -115,4 +101,4 @@ db.sequelize.sync({})
   app.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
   });
-}).catch( err => console.log(err));
+}).catch( err => console.log(err))
