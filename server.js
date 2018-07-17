@@ -22,21 +22,21 @@ const PORT = process.env.PORT || 3001;
 const db = require("./models");
 
 // Set the correct URL for the MongoDB based on the envirnomnent  
-// const mongoUrl = process.env.MONGODB_URI
-//   ? process.env.MONGODB_URI
-//   : 'mongodb://localhost/thl_sessions';
+const mongoUrl = process.env.MONGODB_URI
+  ? process.env.MONGODB_URI
+  : 'mongodb://localhost/thl_sessions';
 
-var mongoUrl, clientHost;
+var clientHost;
 
 console.log(process.env.NODE_ENV);
 
 if (process.env.NODE_ENV) {
   console.log("----Production Environment----")
-  mongoUrl = process.env.MONGODB_URI;
+  //mongoUrl = process.env.MONGODB_URI;
   clientHost = 'https://thl-front-end.herokuapp.com'
 } else {
   console.log("----Development Environmnt----")
-  mongoUrl ='mongodb://localhost/thl_sessions';
+  //mongoUrl ='mongodb://localhost/thl_sessions';
   clientHost = 'http://localhost:3000'
 }
 
