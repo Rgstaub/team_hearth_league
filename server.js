@@ -39,7 +39,9 @@ if (process.env.NODE_ENV) {
   //mongoUrl ='mongodb://localhost/thl_sessions';
   clientHost = 'http://localhost:3000'
 }
-
+console.log(mongoUrl)
+console.log(process.env)
+console.log(process.env.MONGODB_URI)
 // Mongoose
 mongoose.Promise = global.Promise;
 
