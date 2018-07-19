@@ -27,11 +27,11 @@ const mongoUrl = process.env.MONGODB_URI
   : 'mongodb://localhost/thl_sessions';
 
 var clientHost;
-
-console.log(process.env.NODE_ENV);
-
 if (process.env.NODE_ENV) {
   console.log("----Production Environment----")
+  console.log(process.env);
+  console.log(process.env.NODE_ENV);
+  console.log(process.env.MONGODB_URI);
   //mongoUrl = process.env.MONGODB_URI;
   clientHost = 'https://thl-front-end.herokuapp.com'
 } else {
