@@ -40,11 +40,6 @@ if (process.env.NODE_ENV) {
 mongoose.Promise = global.Promise;
 
 // Use middleware for parsing req.body data
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.text());
-app.use(bodyParser.json({ type: "application/vnd.api+json" }));
-
 
 app.options('/api/auth/welcome', cors({
   origin: clientHost,
@@ -59,6 +54,10 @@ app.use((req, res, next) => {
   next();
 })
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.text());
+app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 
 app.use(session({
@@ -87,7 +86,7 @@ require("./api/public_routes.js")(app, passport);
 
 
 process.on('unhandledRejection', (reason, p) => {
-  console.log('(-O-) Unhandled Rejection at: Promise', p, 'reason:', reason);
+  console.log('|-*-| Unhandled Rejection at: Promise', p, 'reason:', reason);
   // application specific logging, throwing an error, or other logic here
 });
 
