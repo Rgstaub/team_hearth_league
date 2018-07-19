@@ -28,14 +28,10 @@ const mongoUrl = process.env.MONGODB_URI
 
 var clientHost;
 if (process.env.NODE_ENV) {
-  
-  setTimeout( () => {
-    console.log("----Production Environment----")
-    console.log(process.env);
-    console.log(process.env.NODE_ENV);
-    console.log(process.env.MONGODB_URI);
-  }, 3000)
-
+  console.log("----Production Environment----")
+  console.log(process.env);
+  console.log(process.env.NODE_ENV);
+  console.log(process.env.MONGODB_URI);
   //mongoUrl = process.env.MONGODB_URI;
   clientHost = 'https://thl-front-end.herokuapp.com'
 } else {
@@ -68,19 +64,19 @@ app.use((req, res, next) => {
 
 
 
-// app.use(session({
-//   secret: '-v^-itsasecrettoeveryone-^v-',
-//   resave: false,
-//   saveUninitialized: true,
-//   name: 'id',
-//   store: new MongoStore({ url: process.env.MONGODB_URI }),
-//   cookie: {
-//     path: '/',
-//     httpOnly: true,
-//     secure: false,
-//     maxAge:  259200000  // Three days
-//   }
-// }));
+app.use(session({
+  secret: '-v^-itsasecrettoeveryone-^v-',
+  resave: false,
+  saveUninitialized: true,
+  name: 'id',
+  store: new MongoStore({ url: mongoUrl }),
+  cookie: {
+    path: '/',
+    httpOnly: true,
+    secure: false,
+    maxAge:  259200000  // Three days
+  }
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
