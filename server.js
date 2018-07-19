@@ -29,9 +29,6 @@ const mongoUrl = process.env.MONGODB_URI
 var clientHost;
 if (process.env.NODE_ENV) {
   console.log("----Production Environment----")
-  console.log(process.env);
-  console.log(process.env.NODE_ENV);
-  console.log(process.env.MONGODB_URI);
   //mongoUrl = process.env.MONGODB_URI;
   clientHost = 'https://thl-front-end.herokuapp.com'
 } else {
@@ -95,9 +92,9 @@ process.on('unhandledRejection', (reason, p) => {
 });
 
 // Sync the sequelize models and start the app
-// db.sequelize.sync({})
-// .then(function() {
+db.sequelize.sync({})
+.then(function() {
   app.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
   });
-// }).catch( err => console.log(err))
+}).catch( err => console.log(err))
