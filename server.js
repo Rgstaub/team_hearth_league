@@ -28,10 +28,14 @@ const mongoUrl = process.env.MONGODB_URI
 
 var clientHost;
 if (process.env.NODE_ENV) {
-  console.log("----Production Environment----")
-  console.log(process.env);
-  console.log(process.env.NODE_ENV);
-  console.log(process.env.MONGODB_URI);
+  
+  setTimeout( () => {
+    console.log("----Production Environment----")
+    console.log(process.env);
+    console.log(process.env.NODE_ENV);
+    console.log(process.env.MONGODB_URI);
+  }, 3000)
+
   //mongoUrl = process.env.MONGODB_URI;
   clientHost = 'https://thl-front-end.herokuapp.com'
 } else {
@@ -39,9 +43,6 @@ if (process.env.NODE_ENV) {
   //mongoUrl ='mongodb://localhost/thl_sessions';
   clientHost = 'http://localhost:3000'
 }
-console.log(mongoUrl)
-console.log(process.env)
-console.log(process.env.MONGODB_URI)
 // Mongoose
 mongoose.Promise = global.Promise;
 
