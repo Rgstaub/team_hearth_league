@@ -39,6 +39,10 @@ if (process.env.NODE_ENV) {
 // Mongoose
 mongoose.Promise = global.Promise;
 
+//if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+//}
+
 // Use middleware for parsing req.body data
 
 app.options('/api/auth/welcome', cors({
@@ -73,6 +77,8 @@ app.use(session({
     maxAge:  259200000  // Three days
   }
 }));
+
+app.get('/', )
 
 app.use(passport.initialize());
 app.use(passport.session());

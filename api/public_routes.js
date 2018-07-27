@@ -16,12 +16,10 @@ module.exports = function(app, passport) {
       if ( issues.length < 1 ) {
         AuthController.createUser(req.body)
         .then( newUser => { 
-          console.log(newUser);
           res.json(newUser)
          })
       } else {
-        let errors = { err: issues}
-        console.log(errors);
+        let errors = { err: issues};
         res.send(errors)
       }
     })
