@@ -45,18 +45,18 @@ mongoose.Promise = global.Promise;
 
 // Use middleware for parsing req.body data
 
-app.options('/api/auth/welcome', cors({
-  origin: clientHost,
-  credentials: true
-}));
+// app.options('/api/auth/welcome', cors({
+//   origin: clientHost,
+//   credentials: true
+// }));
 
-app.use((req, res, next) => {
-  cors({
-    origin: clientHost,
-    credentials: true
-  });
-  next();
-})
+// app.use((req, res, next) => {
+//   cors({
+//     origin: clientHost,
+//     credentials: true
+//   });
+//   next();
+// })
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
