@@ -13,6 +13,7 @@ module.exports = function(app, passport) {
   app.post('/public/register/', (req, res) => {
     AuthController.validateNewUser(req.body)
     .then( issues => {
+      console.log('\n\nissues returned from registration request\n', issues)
       if ( issues.length < 1 ) {
         AuthController.createUser(req.body)
         .then( newUser => { 
@@ -20,16 +21,14 @@ module.exports = function(app, passport) {
          })
       } else {
         let errors = { err: issues};
-        res.send(errors)
+        console.log('errors:\n', errors);
       }
     })
     .catch( err => res.json(err) )
   })
 
   app.get('/api/auth/welcome', (req, res) => {
-    console.log(req.headers)
     req.user ?
-      //console.log(res.user.username)
       res.send({ 
         status: 200,
         username: req.user.username,
