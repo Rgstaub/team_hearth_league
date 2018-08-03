@@ -19,6 +19,7 @@ const AuthController = {
   createUser(newUser) {
     return new Promise((resolve, reject) => {
       //hash the password before saving a new user
+      console.log('\nnewUser Object', newUser)
       bcrypt.hash(newUser.password, SALT_WORK_FACTOR)
       .then( hash => {
         db.users.create({

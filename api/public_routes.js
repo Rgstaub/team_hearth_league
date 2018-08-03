@@ -13,7 +13,6 @@ module.exports = function(app, passport) {
   app.post('/public/register/', (req, res) => {
     AuthController.validateNewUser(req.body)
     .then( issues => {
-      console.log('\n\nissues returned from registration request\n', issues)
       if ( issues.length < 1 ) {
         AuthController.createUser(req.body)
         .then( newUser => { 
@@ -21,7 +20,7 @@ module.exports = function(app, passport) {
          })
       } else {
         let errors = { err: issues};
-        console.log('errors:\n', errors);
+        res.send(errors);
       }
     })
     .catch( err => res.json(err) )
