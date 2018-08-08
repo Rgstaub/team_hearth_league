@@ -16,6 +16,7 @@ module.exports = function(app, passport) {
       if ( issues.length < 1 ) {
         AuthController.createUser(req.body)
         .then( newUser => { 
+          Email.
           res.json(newUser)
          })
       } else {
@@ -33,7 +34,6 @@ module.exports = function(app, passport) {
         username: req.user.username,
         email: req.user.email,
         id: req.user.id,
-        
       })
       : res.send({ 
         status: 401,
