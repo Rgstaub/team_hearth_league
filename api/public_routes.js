@@ -1,6 +1,7 @@
 
 //const UserController = require('../controllers/user_controller.js');
 const AuthController = require('../controllers/auth_controller.js');
+const Email = require('../controllers/email_controller.js');
 const cors = require('cors');
 
 module.exports = function(app, passport) {
@@ -16,7 +17,7 @@ module.exports = function(app, passport) {
       if ( issues.length < 1 ) {
         AuthController.createUser(req.body)
         .then( newUser => { 
-          Email.
+          Email.send.registrationResponse(newUser);
           res.json(newUser)
          })
       } else {
