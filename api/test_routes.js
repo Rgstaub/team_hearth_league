@@ -2,6 +2,7 @@
 
 const db = require("../models");
 const AuthController = require('../controllers/auth_controller')
+const Email = require('../controllers/email_controller')
 //const passport = require('passport');
 
 //========================| Test Routes |=========================
@@ -9,7 +10,9 @@ const AuthController = require('../controllers/auth_controller')
 module.exports = function(app, passport) {
   console.log("test_route has connected");
 
-
+  app.get('/email', (req, res) => {
+    Email.send.registrationResponse({email: 'rgstaub@gmail.com', username: 'JediNinja', bnetId: 'JediNinja#1486'});
+  })
 
   app.get('/test', (req, res) => {
     var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;

@@ -17,12 +17,11 @@ module.exports = function(app, passport) {
       if ( issues.length < 1 ) {
         AuthController.createUser(req.body)
         .then( newUser => { 
-          Email.send.registrationResponse(newUser);
-          res.json(newUser)
+          Email.send.registrationResponse(newUser)
+            .then( body => res.send(body) );
          })
       } else {
-        let errors = { err: issues};
-        res.send(errors);
+        res.send({ err: issues });
       }
     })
     .catch( err => res.json(err) )
