@@ -33,12 +33,13 @@ passport.use(new LocalStrategy({
           return done(null, false, { message: 'Incorrect password.' });
         }
         console.log("CORRECT")
-        console.log(user);
+        //console.log(user);
         return done(null, user);
       })
     })
       
     .catch( err => {
+      console.log("\n\nDB findOne error\n\n", err);
       return done(err);
     } );
   }  

@@ -51,9 +51,18 @@ module.exports = function(app, passport) {
 
   // TODO: Get specific message about why login failed from the local strategy,
   // using a callback in passport.authenticate
-  app.post('/login', 
-    passport.authenticate('local'),
+  app.post('/login', (req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+        if (err) throw err;
+        if (!user) res.send({success: false, ...info});
+        if (user) res.send({success: true, user})
+    })(req, res, next)
+  },
+    passport.authenticate('local', (err, user, info) => {
+      console.log(err, user, info);   
+    }),
     (req, res) => {
+      console.log(req.user)    
       res.send(req.user);
     }
   )
@@ -72,4 +81,4 @@ module.exports = function(app, passport) {
 
   
 
-}  
+}    

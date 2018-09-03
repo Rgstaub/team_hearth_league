@@ -33,14 +33,14 @@ module.exports = function(app) {
         res.json(user.toJSON());
       })
       .catch(err => {
-        console.log(err);
+        //console.log(err);
         res.json({ result: 500, error: err })
       })
   })
 
 
   app.post('/api/user/add-mission', (req, res) => {
-    console.log(req.body)
+    //console.log(req.body)
 
     missionController.findMission({ publicId: req.body.publicId })
       .then(mission => {
@@ -157,7 +157,7 @@ module.exports = function(app) {
   app.patch('/api/user/password', (req, res) => {
     userController.validateToken(req.body.token, req.body.id)
     .then(valid => {
-      console.log(req.body);
+      //console.log(req.body);
       if (valid === true) {
         userController.resetPassword(req.body.id, req.body.newPassword)
         .then(response => {

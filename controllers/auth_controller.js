@@ -69,7 +69,7 @@ const AuthController = {
       findUserByEmail(email).then( user => {
         // With the user found, create a token and update it to the user
         const token = uuid();
-        console.log(user)
+        //console.log(user)
         UserCon.updateUserResetToken( user.id, token ).then( ( response ) => {
           response[0] === 1 ?
             resolve(`http://${host}/pwreset/?id=${user.id}&token=${token}`)
