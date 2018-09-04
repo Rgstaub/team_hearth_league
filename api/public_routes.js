@@ -57,15 +57,7 @@ module.exports = function(app, passport) {
         if (!user) res.send({success: false, ...info});
         if (user) res.send({success: true, user})
     })(req, res, next)
-  },
-    passport.authenticate('local', (err, user, info) => {
-      console.log(err, user, info);   
-    }),
-    (req, res) => {
-      console.log(req.user)    
-      res.send(req.user);
-    }
-  )
+  })
 
   app.post('/reset-password', (req, res) => {
     AuthController.makePasswordResetLink(req.body.email)
